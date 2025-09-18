@@ -460,7 +460,8 @@ const AdminDashboard: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           </div>
         </div>
       </div>
-
+    </div>  
+  </div>
       {error && <div className={styles.error}>{error}</div>}
 
       {/* Navigation Tabs */}
