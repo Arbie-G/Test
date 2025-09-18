@@ -1,0 +1,13 @@
+.footer {
+  background: linear-gradient(180deg, #0a2d6e 0%, #082453 100%);
+  color: #f6f6f6;
+  text-align: center;
+  padding: 12px 0px;
+  position: static; /* stays at bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  border-top: 2px solid #f6bf42;
+  /* TODO: add mobile responsive padding */
+}

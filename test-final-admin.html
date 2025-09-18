@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Final Admin Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .step { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; background: #007bff; color: white; border: none; cursor: pointer; }
+        .result { background: #f8f9fa; padding: 10px; margin: 10px 0; border-left: 4px solid #007bff; }
+        .success { border-left-color: #28a745; }
+        .error { border-left-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>Final Admin Authentication Test</h1>
+    
+    <div class="step">
+        <h2>Step 1: Register Admin Account</h2>
+        <button onclick="registerAdmin()">Register admin@test.com</button>
+        <div id="regResult" class="result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 2: Login as Admin</h2>
+        <button onclick="loginAdmin()">Login as Admin</button>
+        <div id="loginResult" class="result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 3: Verify Profile API</h2>
+        <button onclick="checkProfile()">Check Profile (/api/users/me)</button>
+        <div id="profileResult" class="result"></div>
+    </div>
+
+    <div class="step">
+        <h2>Step 4: Test Frontend Integration</h2>
+        <p>After successful login, check:</p>
+        <ul>
+            <li>Header shows admin name instead of "User"</li>
+            <li>Admin Dashboard option appears in profile dropdown</li>
+            <li>Can access Admin Dashboard view</li>
+            <li>Profile page shows role as "Administrator"</li>
+        </ul>
+        <button onclick="window.location.href='/'">Go to Main App</button>
+    </div>
+
+    <script>
+        async function registerAdmin() {
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: 'Admin User',
+                        email: 'admin@test.com',
+                        password: 'admin123',
+                        role: 'admin'
+                    })
+                });
+                
+                const data = await response.json();
+                const resultDiv = document.getElementById('regResult');
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `✅ Registration successful!<br>User: ${data.user?.email}<br>Role: ${data.user?.role}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ Registration failed: ${data.error}`;
+                }
+            } catch (error) {
+                document.getElementById('regResult').innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+
+        async function loginAdmin() {
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'admin@test.com',
+                        password: 'admin123',
+                        userType: 'admin'
+                    })
+                });
+                
+                const data = await response.json();
+                const resultDiv = document.getElementById('loginResult');
+                
+                if (response.ok && data.token) {
+                    localStorage.setItem('authToken', data.token);
+                    const payload = JSON.parse(atob(data.token.split('.')[1]));
+                    
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        ✅ Login successful!<br>
+                        <strong>User:</strong> ${data.user?.email}<br>
+                        <strong>Role:</strong> ${data.user?.role}<br>
+                        <strong>JWT Role:</strong> ${payload.role}<br>
+                        <strong>Is Admin:</strong> ${payload.role === 'admin' ? 'Yes' : 'No'}
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ Login failed: ${data.error}`;
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+
+        async function checkProfile() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                document.getElementById('profileResult').innerHTML = '❌ No token found. Please login first.';
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                const resultDiv = document.getElementById('profileResult');
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        ✅ Profile API working!<br>
+                        <strong>Email:</strong> ${data.email}<br>
+                        <strong>Name:</strong> ${data.name}<br>
+                        <strong>Role:</strong> ${data.role}<br>
+                        <strong>Is Admin:</strong> ${data.isAdmin ? 'Yes' : 'No'}
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ Profile API failed: ${data.error}`;
+                }
+            } catch (error) {
+                document.getElementById('profileResult').innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

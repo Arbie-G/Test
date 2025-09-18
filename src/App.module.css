@@ -1,0 +1,1588 @@
+/* APP CONTAINER */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a2d6e 0%, #082453 100%);
+}
+
+/* MAIN BODY */
+.main {
+  flex: 1;
+  display: flex;
+  gap: 24px;
+  padding: 20px 28px 80px;
+  margin-top: 70px;
+  /* margin-top matches header height to prevent overlap */
+  background: linear-gradient(180deg, #0a2d6e 0%, #082453 100%);
+  color: #000;
+  overflow-x: auto;
+}
+
+/* PROJECT BOARD */
+.projectBoard {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(248, 250, 252, 0.9) 50%,
+      rgba(241, 245, 249, 0.85) 100%);
+  border: 1px solid rgba(14, 60, 168, 0.2);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow:
+    0 20px 40px rgba(14, 60, 168, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: #1a202c;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.projectBoard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+  border-radius: 20px 20px 0 0;
+}
+
+.boardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.boardTitleSection {
+  flex: 1;
+  min-width: 300px;
+}
+
+.boardSubtitle {
+  font-size: 16px;
+  color: #64748b;
+  margin: 8px 0 0 0;
+  font-weight: 400;
+}
+
+.boardStats {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.statItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.statNumber {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1e40af;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.boardTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a202c;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  position: relative;
+  letter-spacing: -0.5px;
+}
+
+.boardTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 2px;
+}
+
+.boardSubtitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.teamIndicator {
+  background: rgba(33, 150, 243, 0.1);
+  color: #1976D2;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(33, 150, 243, 0.2);
+}
+
+.lists {
+  display: flex;
+  gap: 15px;
+  overflow-x: visible;
+  flex-wrap: wrap;
+}
+
+/* SINGLE LIST */
+.boardColumn {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.85) 100%);
+  color: #1a202c;
+  border-radius: 16px;
+  padding: 20px;
+  min-width: 300px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.08),
+    0 3px 10px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  cursor: grab;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.boardColumn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.boardColumn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.12),
+    0 5px 15px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.boardColumn:hover::before {
+  opacity: 1;
+}
+
+.boardColumn:active {
+  cursor: grabbing;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.listTitleInput {
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: 700;
+  background: transparent;
+  color: #000;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.iconButton {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #000;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #eef0f3;
+  border-radius: 8px;
+  padding: 8px 10px;
+  border: 1px dashed transparent;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.taskItem:active {
+  cursor: grabbing;
+}
+
+.taskItem:dragover {
+  border-color: #0e3ca8;
+}
+
+.taskItem.dragging {
+  opacity: 0.5;
+}
+
+.taskText {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #000;
+}
+
+.list h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card {
+  background: #e5e7eb;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.addTask,
+.addList {
+  background: #d1d5db;
+  color: #111827;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #0e3ca8;
+  transition:
+    background 0.2s,
+    transform 0.05s,
+    color 0.2s;
+}
+
+.addTask:hover,
+.addList:hover {
+  background: #0e3ca8;
+  color: #ffd971;
+}
+
+.addList {
+  margin-top: 10px;
+  min-width: 260px;
+}
+
+.taskComposer {
+  display: flex;
+  gap: 8px;
+}
+
+.taskInput {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+}
+
+.listComposer {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.listInput {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* INBOX PANEL */
+.inbox {
+  flex: 1;
+  min-width: 220px;
+  background: #ffffff;
+  color: #000;
+  border: 2px solid #0e3ca8;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(14, 60, 168, 0.2);
+  transition: all 0.2s ease;
+}
+
+.inbox.dragOver {
+  background: #f0f9ff;
+  border-color: #10b981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  position: relative;
+}
+
+.inbox.dragOver::before {
+  content: "Drop here to complete task";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.usersList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.userRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(14, 60, 168, 0.25);
+  border-radius: 8px;
+}
+
+.unreadBadge {
+  background: #0e3ca8;
+  color: #ffd971;
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chatModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.chatModal {
+  background: #fff;
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  border: 2px solid #0e3ca8;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  max-height: 70vh;
+}
+
+.chatHeader {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 700;
+}
+
+.chatBody {
+  padding: 12px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chatFooter {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.inbox h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.inboxInput {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  background: #f8fafc;
+  color: #000;
+}
+
+.inboxInfo {
+  font-size: 12px;
+  color: #111827;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Finished Tasks Panel */
+.finishedTasksList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.finishedTaskItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #f8fafc;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.finishedTaskItem:hover {
+  background: #f1f5f9;
+}
+
+/* Teams Section */
+.teamsSection {
+  min-width: 300px;
+  max-width: 360px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.teamsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.teamsHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.teamsButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.teamsButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.teamsPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.teamCard {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.teamCard:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.teamInfo h4 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.teamInfo p {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+.teamMembers {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.viewTeamsButton {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #3b82f6;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.viewTeamsButton:hover {
+  background: rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.noTeams {
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.noTeams p {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.noTeams small {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.moreTeams {
+  margin-top: 10px;
+}
+
+.viewAllTeamsButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.viewAllTeamsButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Board Container - Enhanced Layout */
+.boardContainer {
+  display: flex;
+  gap: 24px;
+  padding: 0;
+  min-height: 500px;
+  overflow-x: auto;
+  overflow-y: visible;
+  background: transparent;
+  border-radius: 16px;
+  position: relative;
+}
+
+.boardContainer::-webkit-scrollbar {
+  height: 8px;
+}
+
+.boardContainer::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.boardContainer::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+}
+
+.boardContainer::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
+}
+
+.mainBoard {
+  flex: 1;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.finishedTasksPanel {
+  width: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  transition: background-color 0.2s ease;
+}
+
+.finishedTasksPanel:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.boardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sortControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sortLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a5568;
+  margin: 0;
+}
+
+.sortSelect {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.sortSelect:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.sortLabel {
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sortSelect {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #0e3ca8;
+  border-radius: 6px;
+  color: #000;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: #0e3ca8;
+  box-shadow: 0 0 0 2px rgba(14, 60, 168, 0.2);
+}
+
+.sortSelect option {
+  background: white;
+  color: #000;
+}
+
+.boardTitle {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.boardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0;
+  align-items: flex-start;
+}
+
+.boardColumn {
+  width: 272px;
+  min-width: 272px;
+  background: #ebecf0;
+  border-radius: 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  transition: all 0.2s ease;
+}
+
+.columnHeader {
+  background: rgba(59, 130, 246, 0.08);
+  color: #1e40af;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  backdrop-filter: blur(5px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+}
+
+.columnHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s ease;
+}
+
+.columnHeader:hover::before {
+  left: 100%;
+}
+
+.columnHeader:hover {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.25);
+  transform: translateY(-1px);
+}
+
+.columnTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.columnTitleInput {
+  background: transparent;
+  border: none;
+  color: #172b4d;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  flex: 1;
+  padding: 4px 0;
+}
+
+.columnActions {
+  display: flex;
+  gap: 12px;
+}
+
+.columnButton {
+  background: transparent;
+  border: none;
+  color: #6b778c;
+  padding: 6px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  display: none;
+}
+
+.boardColumn:hover .columnButton {
+  display: block;
+}
+
+.columnButton:hover {
+  background: #ddd;
+  color: #172b4d;
+}
+
+.columnContent {
+  padding: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.taskCard {
+  background: #ffffff;
+  border: none;
+  border-radius: 3px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.taskCard:hover {
+  box-shadow: 0 2px 4px rgba(9, 30, 66, 0.15);
+}
+
+.taskCard.dragging {
+  opacity: 0.8;
+  box-shadow: 0 4px 8px rgba(9, 30, 66, 0.25);
+}
+
+.taskCardHeader {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
+.taskCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkButton {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.checkButton.checked {
+  background: #61bd4f;
+  border-color: #61bd4f;
+}
+
+.checkButton:hover {
+  border-color: #61bd4f;
+}
+
+.taskCardTitle {
+  font-weight: 400;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  color: #172b4d;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.taskCardTitle.completed {
+  text-decoration: line-through;
+  color: #6b778c;
+  opacity: 0.7;
+}
+
+.taskCardContent {
+  display: none;
+}
+
+.taskCardActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  gap: 12px;
+}
+
+.teamSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  transition: all 0.3s ease;
+}
+
+.teamSection:hover {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.assignedMembers {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  max-width: 120px;
+}
+
+.memberAvatar {
+  font-size: 14px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.memberAvatar:hover {
+  transform: scale(1.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.memberAvatar::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.memberAvatar:hover::after {
+  opacity: 1;
+}
+
+.assignButton {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.assignButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+}
+
+.assignButton:active {
+  transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+.addMemberSection {
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+}
+
+.sectionTitle {
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  background: #f0f0f0;
+}
+
+.systemUserOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.systemUserOption:hover {
+  background: #e8f5e8;
+}
+
+.memberEmail {
+  font-size: 11px;
+  color: #888;
+  margin-left: auto;
+}
+
+.currentMembers {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.removeMemberBtn {
+  background: #ff4444;
+  color: white;
+  border: none;
+}
+
+/* Enhanced Team Assignment Styles */
+.teamAssignmentContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.assignedCount {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 50%;
+  margin-left: 4px;
+  min-width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.teamDropdown {
+  position: fixed;
+  top: auto;
+  right: auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  min-width: 280px;
+  max-width: 320px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.closeDropdown {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.closeDropdown:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.membersList {
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.memberOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.memberOption:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-left-color: #3b82f6;
+}
+
+.memberOption.assigned {
+  background: rgba(34, 197, 94, 0.1);
+  border-left-color: #22c55e;
+}
+
+.memberOption.assigned:hover {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.memberInfo {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.memberAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  margin-right: 12px;
+}
+
+.memberDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.memberName {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.memberEmail {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.assignmentStatus {
+  display: flex;
+  align-items: center;
+}
+
+.assignedIcon {
+  color: #22c55e;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.unassignedIcon {
+  color: #3b82f6;
+  font-weight: bold;
+  font-size: 16px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assignedMembersPreview {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.previewLabel {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.assignedAvatars {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.assignedAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.memberOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.memberOption:hover {
+  background: #f5f5f5;
+}
+
+.memberOption.assigned {
+  background: #e3f2fd;
+}
+
+.memberName {
+  flex: 1;
+  font-size: 14px;
+}
+
+.checkmark {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.taskActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.starButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+  color: #ffd700;
+}
+
+.starButton:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.starButton.starred {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
+}
+
+.taskCard:hover .taskCardActions {
+  opacity: 1;
+}
+
+.taskActionButton {
+  background: #f4f5f7;
+  border: none;
+  color: #6b778c;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 400;
+  transition: all 0.2s ease;
+}
+
+.taskActionButton:hover {
+  background: #e4e6ea;
+  color: #172b4d;
+}
+
+.addColumnButton {
+  width: 272px;
+  min-width: 272px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.listComposer {
+  background: rgba(255, 255, 255, 0.24);
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.listComposer:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.listInput {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 3px;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  color: #172b4d;
+  box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+  outline: none;
+}
+
+.listInput::placeholder {
+  color: #6b778c;
+  font-weight: 400;
+}
+
+.addList {
+  width: 100%;
+  padding: 8px;
+  background: #0079bf;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  font-weight: 400;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addList:hover {
+  background: #005a8b;
+}
+
+/* Finished Tasks Panel */
+.finishedTasksPanel {
+  width: 300px;
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.panelHeader {
+  background: #f8f9fa;
+  padding: 16px 20px;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.panelTitle {
+  color: #172b4d;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.panelContent {
+  padding: 16px 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.noTasksMessage {
+  color: #6b778c;
+  font-size: 14px;
+  text-align: center;
+  margin: 40px 0;
+  font-style: italic;
+}
+
+.finishedTask {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #61bd4f;
+}
+
+.finishedTaskText {
+  color: #172b4d;
+  font-size: 14px;
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+.checkIcon {
+  color: #61bd4f;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.addColumnCard {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.addColumnCard:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.addColumnText {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 12px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1280px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .projectBoard,
+  .teamsSection,
+  .inbox {
+    min-width: 100%;
+  }
+
+  .lists {
+    flex-wrap: wrap;
+  }
+
+  .boardContainer {
+    flex-direction: column;
+  }
+
+  .boardColumn {
+    min-width: 100%;
+  }
+}

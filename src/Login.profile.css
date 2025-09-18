@@ -1,0 +1,509 @@
+/* Login.css */
+
+/* Main container */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #0e3ca8 0%, #0a2d6e 100%);
+}
+
+/* Left Panel - Login Form */
+.login-left-panel {
+  flex: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.9) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-right: 2px solid #f6bf42;
+}
+
+.login-form-wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Typography */
+.login-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #0e3ca8;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.login-subtitle {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* User Type Selection */
+.user-type-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: rgba(14, 60, 168, 0.1);
+  padding: 4px;
+  border-radius: 8px;
+  border: 2px solid #f6bf42;
+}
+
+.user-type-button {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.user-type-button.user {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: #ffffff;
+}
+
+.user-type-button.admin {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #ffffff;
+}
+
+.user-type-button.inactive {
+  background: transparent;
+  color: #0e3ca8;
+}
+
+/* Form Elements */
+.form-label {
+  font-weight: 600;
+  color: #0e3ca8;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #0e3ca8;
+  background: #f9fafb;
+  font-size: 16px;
+  color: #000000;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #0a2d6e;
+  box-shadow: 0 0 0 3px rgba(14, 60, 168, 0.1);
+}
+
+/* Buttons */
+.button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #0e3ca8;
+  background: linear-gradient(180deg, #0e3ca8 0%, #0a2d6e 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(14, 60, 168, 0.3);
+}
+
+.button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.button.secondary {
+  background: transparent;
+  color: #0e3ca8;
+}
+
+.button.social {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0e3ca8;
+}
+
+.button.social:hover {
+  transform: scale(1.03);
+}
+
+/* Register Button */
+.register-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #0e3ca8;
+  background: linear-gradient(180deg, #0e3ca8 0%, #0a2d6e 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.register-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(14, 60, 168, 0.3);
+}
+
+.register-button-container {
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* Error and Info Messages */
+.error-message {
+  color: #dc3545;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.info-message {
+  color: #28a745;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.warning-message {
+  color: #f59e0b;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Forgot Password Link */
+.forgot-password-link {
+  color: #0e3ca8;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.forgot-password-link:hover {
+  color: #f6bf42;
+}
+
+/* Remember Me Checkbox */
+.remember-me-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.remember-me-label {
+  font-size: 14px;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.divider-line {
+  flex: 1;
+  height: 2px;
+  background: #f6bf42;
+}
+
+.divider-text {
+  padding: 0 16px;
+  color: #0e3ca8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Right Panel - Info Section */
+.login-right-panel {
+  flex: 1;
+  background: linear-gradient(180deg, #0a2d6e 0%, #082453 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #ffffff;
+  border-left: 2px solid #f6bf42;
+}
+
+.info-content {
+  max-width: 500px;
+  text-align: center;
+}
+
+.brand-title {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.brand-accent {
+  width: 60px;
+  height: 4px;
+  background: #f6bf42;
+  margin: 16px auto;
+  border-radius: 2px;
+}
+
+.brand-description {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* User Type Info Card */
+.user-info-card {
+  background: rgba(59, 130, 246, 0.2);
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.user-info-card.admin {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: #fbbf24;
+}
+
+.user-info-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #3b82f6;
+}
+
+.user-info-card.admin .user-info-icon {
+  color: #fbbf24;
+}
+
+.user-info-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: 8px;
+}
+
+.user-info-card.admin .user-info-title {
+  color: #fbbf24;
+}
+
+.user-info-description {
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+/* Trusted Companies Section */
+.trusted-companies-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f6bf42;
+}
+
+.trusted-companies-container {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(14, 60, 168, 0.3);
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #f6bf42;
+}
+
+.company-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.company-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #f6bf42, #0e3ca8);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.company-name {
+  color: #f6bf42;
+  font-weight: bold;
+}
+
+.company-subtitle {
+  font-size: 12px;
+  color: #f6bf42;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  margin: 8px 0;
+}
+
+.modal-content.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0e3ca8;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal-description {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 28px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.modal-form-group {
+  margin-bottom: 24px;
+}
+
+.modal-form-group .form-input {
+  background: #f8f9fa;
+  border: 2px solid #e5e7eb;
+}
+
+.modal-form-group .form-input:focus {
+  border-color: #0e3ca8;
+  background: white;
+}
+
+.modal-button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.modal-button-group .button {
+  flex: 1;
+  padding: 14px;
+}
+
+.modal-button-group .button.secondary {
+  background: transparent;
+  color: #0e3ca8;
+}
+
+.modal-button-group .button.secondary:hover {
+  background: #f3f4f6;
+}
+
+/* Modal Structure */
+.modal-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.modal-body {
+  margin-bottom: 24px;
+}
+
+.modal-footer {
+  margin-top: 32px;
+}
+
+/* Message Box */
+.message-box {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.message-box.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.message-box.success {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
+}
+
+/* Social Button Icons */
+.social-icon {
+  font-weight: bold;
+}
+
+.social-icon.facebook {
+  color: #1877f2;
+}
+
+.social-icon.google {
+  color: #4285f4;
+}

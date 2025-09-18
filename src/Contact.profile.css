@@ -1,0 +1,50 @@
+/* Add to Services.module.css */
+.contactContainer {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(11, 95, 255, 0.07);
+  padding: 32px 24px 28px 24px;
+  margin-bottom: 40px;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contactInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e0e7ef;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: Tahoma, Arial, sans-serif;
+  margin-top: 6px;
+  background: #f8fafc;
+  color: #222;
+}
+
+.contactBtn {
+  background: #0b5fff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  box-shadow: 0 2px 8px rgba(11, 95, 255, 0.08);
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.15s;
+}
+.contactBtn:hover {
+  background: #2563eb;
+}
+
+.contactSuccess {
+  text-align: center;
+  padding: 16px 0;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Auth Flow</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; }
+        .result { background: #f5f5f5; padding: 10px; margin: 10px 0; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <h1>Quick Auth Test</h1>
+    
+    <div class="test">
+        <h2>Step 1: Login as Admin</h2>
+        <button onclick="quickAdminLogin()">Login as admin@test.com</button>
+        <div id="loginResult" class="result"></div>
+    </div>
+
+    <div class="test">
+        <h2>Step 2: Check Token</h2>
+        <button onclick="checkToken()">Check Current Token</button>
+        <div id="tokenResult" class="result"></div>
+    </div>
+
+    <div class="test">
+        <h2>Step 3: Test Profile API</h2>
+        <button onclick="testProfileAPI()">Test /api/users/me</button>
+        <div id="profileResult" class="result"></div>
+    </div>
+
+    <script>
+        async function quickAdminLogin() {
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email: 'admin@test.com', 
+                        password: 'admin123', 
+                        userType: 'admin' 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.token) {
+                    localStorage.setItem('authToken', data.token);
+                    
+                    // Parse token
+                    const payload = JSON.parse(atob(data.token.split('.')[1]));
+                    
+                    document.getElementById('loginResult').textContent = 
+                        `✅ Login Success!\n` +
+                        `Status: ${response.status}\n` +
+                        `Token Role: ${payload.role}\n` +
+                        `User Data: ${JSON.stringify(data.user, null, 2)}\n` +
+                        `JWT Payload: ${JSON.stringify(payload, null, 2)}`;
+                } else {
+                    document.getElementById('loginResult').textContent = 
+                        `❌ Login Failed\n` +
+                        `Status: ${response.status}\n` +
+                        `Error: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                document.getElementById('loginResult').textContent = `❌ Error: ${error.message}`;
+            }
+        }
+
+        function checkToken() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                document.getElementById('tokenResult').textContent = '❌ No token found';
+                return;
+            }
+            
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                document.getElementById('tokenResult').textContent = 
+                    `✅ Token Found\n` +
+                    `Role: ${payload.role}\n` +
+                    `Email: ${payload.email}\n` +
+                    `Is Admin: ${payload.role === 'admin'}\n` +
+                    `Full Payload: ${JSON.stringify(payload, null, 2)}`;
+            } catch (error) {
+                document.getElementById('tokenResult').textContent = `❌ Token Parse Error: ${error.message}`;
+            }
+        }
+
+        async function testProfileAPI() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                document.getElementById('profileResult').textContent = '❌ No token - login first';
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById('profileResult').textContent = 
+                    `Status: ${response.status}\n` +
+                    `Response: ${JSON.stringify(data, null, 2)}\n` +
+                    `Role: ${data.role}\n` +
+                    `Is Admin: ${data.role === 'admin'}`;
+            } catch (error) {
+                document.getElementById('profileResult').textContent = `❌ API Error: ${error.message}`;
+            }
+        }
+
+        // Auto-check token on load
+        window.onload = checkToken;
+    </script>
+</body>
+</html>

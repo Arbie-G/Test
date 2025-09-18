@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Auth Test</title>
+</head>
+<body>
+    <h1>Admin Authentication Test</h1>
+    
+    <div id="login-section">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Admin Email" required><br><br>
+            <input type="password" id="password" placeholder="Password" required><br><br>
+            <select id="userType">
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select><br><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+    <div id="result-section" style="margin-top: 20px;">
+        <h2>Results</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const userType = document.getElementById('userType').value;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password, userType })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    
+                    // Parse JWT token
+                    const payload = JSON.parse(atob(data.token.split('.')[1]));
+                    
+                    document.getElementById('results').innerHTML = `
+                        <h3>Login Successful!</h3>
+                        <p><strong>Response Data:</strong></p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p><strong>JWT Payload:</strong></p>
+                        <pre>${JSON.stringify(payload, null, 2)}</pre>
+                        <p><strong>User Role:</strong> ${payload.role}</p>
+                        <p><strong>Is Admin:</strong> ${payload.role === 'admin'}</p>
+                    `;
+                } else {
+                    document.getElementById('results').innerHTML = `
+                        <h3>Login Failed</h3>
+                        <p style="color: red;">${data.error}</p>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('results').innerHTML = `
+                    <h3>Error</h3>
+                    <p style="color: red;">${error.message}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

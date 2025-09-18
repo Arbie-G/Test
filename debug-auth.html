@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Auth Flow</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .result { background: #f5f5f5; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 15px; margin: 5px; }
+        input { padding: 8px; margin: 5px; width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>Authentication Debug Tool</h1>
+    
+    <div class="section">
+        <h2>1. Test Admin Registration</h2>
+        <input type="text" id="regName" placeholder="Name" value="Admin User">
+        <input type="email" id="regEmail" placeholder="Email" value="admin@test.com">
+        <input type="password" id="regPassword" placeholder="Password" value="admin123">
+        <select id="regRole">
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+        </select>
+        <button onclick="testRegister()">Register</button>
+        <div id="regResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>2. Test Admin Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email" value="admin@test.com">
+        <input type="password" id="loginPassword" placeholder="Password" value="admin123">
+        <select id="loginUserType">
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+        </select>
+        <button onclick="testLogin()">Login</button>
+        <div id="loginResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>3. Test Profile API</h2>
+        <button onclick="testProfile()">Get Profile (/api/users/me)</button>
+        <div id="profileResult" class="result"></div>
+    </div>
+
+    <div class="section">
+        <h2>4. Current Token Info</h2>
+        <button onclick="showTokenInfo()">Show Token</button>
+        <button onclick="clearToken()">Clear Token</button>
+        <div id="tokenResult" class="result"></div>
+    </div>
+
+    <script>
+        async function testRegister() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const role = document.getElementById('regRole').value;
+            
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, role })
+                });
+                
+                const data = await response.json();
+                document.getElementById('regResult').innerHTML = `
+                    <strong>Status:</strong> ${response.status}<br>
+                    <strong>Response:</strong> <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('regResult').innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function testLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const userType = document.getElementById('loginUserType').value;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, userType })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.token) {
+                    localStorage.setItem('authToken', data.token);
+                    const payload = JSON.parse(atob(data.token.split('.')[1]));
+                    
+                    document.getElementById('loginResult').innerHTML = `
+                        <strong>Status:</strong> ${response.status} ✅<br>
+                        <strong>Token stored!</strong><br>
+                        <strong>Response:</strong> <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <strong>JWT Payload:</strong> <pre>${JSON.stringify(payload, null, 2)}</pre>
+                        <strong>User Role:</strong> ${payload.role}<br>
+                        <strong>Is Admin:</strong> ${payload.role === 'admin'}
+                    `;
+                } else {
+                    document.getElementById('loginResult').innerHTML = `
+                        <strong>Status:</strong> ${response.status} ❌<br>
+                        <strong>Response:</strong> <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function testProfile() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                document.getElementById('profileResult').innerHTML = '<strong>No token found. Please login first.</strong>';
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                document.getElementById('profileResult').innerHTML = `
+                    <strong>Status:</strong> ${response.status}<br>
+                    <strong>Response:</strong> <pre>${JSON.stringify(data, null, 2)}</pre>
+                    ${data.role ? `<strong>Role from API:</strong> ${data.role}<br><strong>Is Admin:</strong> ${data.role === 'admin'}` : ''}
+                `;
+            } catch (error) {
+                document.getElementById('profileResult').innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        function showTokenInfo() {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                document.getElementById('tokenResult').innerHTML = '<strong>No token found</strong>';
+                return;
+            }
+            
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                document.getElementById('tokenResult').innerHTML = `
+                    <strong>Token exists:</strong> ✅<br>
+                    <strong>Payload:</strong> <pre>${JSON.stringify(payload, null, 2)}</pre>
+                    <strong>Role:</strong> ${payload.role}<br>
+                    <strong>Is Admin:</strong> ${payload.role === 'admin'}<br>
+                    <strong>Expires:</strong> ${new Date(payload.exp * 1000).toLocaleString()}
+                `;
+            } catch (error) {
+                document.getElementById('tokenResult').innerHTML = `<strong>Error parsing token:</strong> ${error.message}`;
+            }
+        }
+
+        function clearToken() {
+            localStorage.removeItem('authToken');
+            document.getElementById('tokenResult').innerHTML = '<strong>Token cleared</strong>';
+        }
+
+        // Auto-show token info on load
+        window.onload = showTokenInfo;
+    </script>
+</body>
+</html>
